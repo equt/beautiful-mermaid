@@ -1,0 +1,55 @@
+name: Update beautiful-mermaid
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Check for updates
+        id: check
+        run: |
+          CURRENT=$(node -p "require('./package.json').dependencies['beautiful-mermaid'].replace(/[^0-9.]/g, '')")
+          LATEST=$(npm view beautiful-mermaid version)
+          echo "current=$CURRENT"
+          echo "latest=$LATEST"
+          echo "latest=$LATEST" >> "$GITHUB_OUTPUT"
+          if [ "$CURRENT" != "$LATEST" ]; then
+            echo "has_update=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_update=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Update dependency
+        if: steps.check.outputs.has_update == 'true'
+        run: bun add beautiful-mermaid@${{ steps.check.outputs.latest }}
+
+      - name: Bump version and commit
+        if: steps.check.outputs.has_update == 'true'
+        env:
+          LATEST: ${{ steps.check.outputs.latest }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          npm version patch --no-git-tag-version
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          npm_package_version=$NEW_VERSION bun version-bump.mjs
+          git add package.json bun.lock manifest.json versions.json
+          git commit -m "chore: bump to $NEW_VERSION (beautiful-mermaid $LATEST)"
+          git tag "$NEW_VERSION"
+
+      - name: Push
+        if: steps.check.outputs.has_update == 'true'
+        run: git push && git push --tags
