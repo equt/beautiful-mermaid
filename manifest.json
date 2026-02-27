@@ -1,10 +1,10 @@
 {
-	"id": "beautiful-mermaid",
-	"name": "Beautiful Mermaid",
-	"version": "1.0.0",
-	"minAppVersion": "0.15.0",
-	"description": "Replace Obsidian's default Mermaid renderer with beautiful, themeable diagrams",
-	"author": "equt",
-	"authorUrl": "https://github.com/equt",
-	"isDesktopOnly": false
+  "id": "beautiful-mermaid",
+  "name": "Beautiful Mermaid",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "Replace Obsidian's default Mermaid renderer with beautiful, themeable diagrams",
+  "author": "equt",
+  "authorUrl": "https://github.com/equt",
+  "isDesktopOnly": false
 }

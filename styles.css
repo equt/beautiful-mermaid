@@ -1,34 +1,34 @@
 /* Map Obsidian theme variables to beautiful-mermaid CSS variables */
 body {
-	--bm-bg: var(--background-primary);
-	--bm-fg: var(--text-normal);
-	--bm-line: var(--text-muted);
-	--bm-accent: var(--interactive-accent);
-	--bm-surface: var(--background-secondary);
-	--bm-border: var(--background-modifier-border);
-	--bm-muted: var(--text-muted);
+  --bm-bg: var(--background-primary);
+  --bm-fg: var(--text-normal);
+  --bm-line: var(--text-muted);
+  --bm-accent: var(--interactive-accent);
+  --bm-surface: var(--background-secondary);
+  --bm-border: var(--background-modifier-border);
+  --bm-muted: var(--text-muted);
 }
 
 .beautiful-mermaid svg {
-	max-width: 100%;
-	height: auto;
+  max-width: 100%;
+  height: auto;
 }
 
 .beautiful-mermaid-error {
-	padding: 1em;
-	border: 1px solid var(--color-red);
-	border-radius: 4px;
-	background: var(--background-secondary);
+  padding: 1em;
+  border: 1px solid var(--color-red);
+  border-radius: 4px;
+  background: var(--background-secondary);
 }
 
 .beautiful-mermaid-error pre {
-	overflow: auto;
-	font-size: 0.85em;
-	white-space: pre-wrap;
+  overflow: auto;
+  font-size: 0.85em;
+  white-space: pre-wrap;
 }
 
 .beautiful-mermaid-error details summary {
-	cursor: pointer;
-	color: var(--text-muted);
-	margin-top: 0.5em;
+  cursor: pointer;
+  color: var(--text-muted);
+  margin-top: 0.5em;
 }
