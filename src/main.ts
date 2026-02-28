@@ -13,33 +13,23 @@ const RENDER_OPTIONS: RenderOptions = {
   transparent: true,
 }
 
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-}
-
 export default class BeautifulMermaidPlugin extends Plugin {
   onload() {
     this.registerMarkdownCodeBlockProcessor('mermaid', (source, el) => {
       try {
         const svg = renderMermaidSVG(source, RENDER_OPTIONS)
-        el.innerHTML = `<div class="beautiful-mermaid">${svg}</div>`
+        const wrapper = el.createDiv({ cls: 'beautiful-mermaid' })
+        const svgDoc = new DOMParser().parseFromString(svg, 'image/svg+xml')
+        wrapper.appendChild(document.adoptNode(svgDoc.documentElement))
       }
       catch (err) {
         const message = err instanceof Error ? err.message : String(err)
-        el.innerHTML = `
-          <div class="beautiful-mermaid-error">
-            <p><strong>Beautiful Mermaid: Failed to render diagram</strong></p>
-            <pre>${escapeHtml(message)}</pre>
-            <details>
-              <summary>Source</summary>
-              <pre>${escapeHtml(source)}</pre>
-            </details>
-          </div>
-        `
+        const wrapper = el.createDiv({ cls: 'beautiful-mermaid-error' })
+        wrapper.createEl('p').createEl('strong', { text: 'Beautiful Mermaid: failed to render diagram' })
+        wrapper.createEl('pre', { text: message })
+        const details = wrapper.createEl('details')
+        details.createEl('summary', { text: 'Source' })
+        details.createEl('pre', { text: source })
       }
     }, -1)
   }
