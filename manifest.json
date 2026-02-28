@@ -1,10 +1,10 @@
 {
   "id": "beautiful-mermaid",
   "name": "Beautiful Mermaid",
-  "version": "1.1.1",
   "minAppVersion": "0.15.0",
   "description": "Replace the default Mermaid renderer with beautiful, themeable diagrams.",
   "author": "equt",
   "authorUrl": "https://github.com/equt",
-  "isDesktopOnly": false
+  "isDesktopOnly": false,
+  "version": "1.2.0"
 }
